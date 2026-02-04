@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+
+    <!-- PNG favicon -->
+    <!-- <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"> -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-64x64xv2.png">
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+
     <title>Portfolio Bagus Darmawan</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -39,6 +49,15 @@
                 I build scalable web systems and intelligent applications with a strong focus on
                 clean architecture, performance, and real-world problem solving.
             </p>
+            <div class="hero-education">
+                <div class="education-card">
+                    <span class="education-title">Education</span>
+                    <p class="education-detail">
+                        <strong>Bachelor of Informatics Engineering</strong>, graduated Cum Laude
+                        with a GPA of 3.71, completed in 3.5 years
+                    </p>
+                </div>
+            </div>
             <div class="hero-buttons">
                 <a href="#contact" class="btn-primary">Contact</a>
                 <a href="#portfolio" class="btn-secondary">Portfolio</a>
@@ -60,8 +79,26 @@
     <!-- About Section -->
     <section class="about" id="about">
         <div class="about-image">
-            <img src="assets/profile.png" alt="About Me" class="about-photo">
             <div class="about-bg-shape"></div>
+            <img src="assets/profile.png" alt="About Me" class="about-photo">
+            <div class="about-contact">
+            <h3 class="contact-title">Let’s Connect My Contact</h3>
+            <p class="contact-subtitle">
+                Feel free to reach out for collaboration or opportunities.
+            </p>
+
+            <div class="social-links">
+                <a href="https://github.com/BagusDarmawan-Tech" target="_blank" class="social-icon">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:bagusdarmawan444@gmail.com" target="_blank" class="social-icon">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/bagus-darmawan-tech/" target="_blank" class="social-icon">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
         </div>
         <div class="about-content">
             <h2 class="section-title">About Me</h2>
@@ -70,7 +107,7 @@
             </p>
             <ul class="skills-list">
                 <li class="skill-item skill-ux">
-                    <div class="skill-name">Website Development (Laravel, Bootstrap, PostMan) </div>
+                    <div class="skill-name">Application Development (Laravel, Flutter, Bootstrap, PostMan) </div>
                     <div class="skill-bar">
                         <div class="skill-progress" style="width:90%"></div>
                     </div>
@@ -156,30 +193,59 @@
                 Explore a collection of my projects, each crafted to deliver seamless.
             </p>
         </div>
-        <div class="portfolio-filters">
-            <button class="filter-btn active">All</button>
-            <button class="filter-btn">Website</button>
-            <button class="filter-btn">App Mobile</button>
-            <button class="filter-btn">Computer Vision</button>
-            <button class="filter-btn">Artifisial intelligent</button>
-            <button class="filter-btn">Data Visulization</button>
+        <!-- DESKTOP FILTER -->
+        <div class="portfolio-filters desktop-only">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="website">Website</button>
+            <button class="filter-btn" data-filter="mobile">App Mobile</button>
+            <button class="filter-btn" data-filter="computer-vision">Computer Vision</button>
+            <button class="filter-btn" data-filter="ai">Artificial Intelligence</button>
+            <button class="filter-btn" data-filter="data-viz">Data Visualization</button>
         </div>
+
+        <!-- MOBILE DROPDOWN -->
+        <div class="portfolio-filter-mobile mobile-only">
+            <select id="portfolioFilter">
+                <option value="all">All</option>
+                <option value="website">Website</option>
+                <option value="mobile">App Mobile</option>
+                <option value="computer-vision">Computer Vision</option>
+                <option value="ai">Artificial Intelligence</option>
+                <option value="data-viz">Data Visualization</option>
+            </select>
+        </div>
+
+
         <div class="portfolio-grid">
-            <div class="portfolio-card">
+            <div class="portfolio-card" data-category="website">
                 <img src="https://images.unsplash.com/photo-1545235617-9465d2a55698?w=600&h=400&fit=crop" alt="Portfolio 1" class="portfolio-image">
                 <div class="portfolio-info">
                     <div class="portfolio-category">Website</div>
                     <h3 class="portfolio-title">Website Landing Page Design & Service</h3>
                 </div>
             </div>
-            <div class="portfolio-card">
+            <div class="portfolio-card" data-category="data-viz">
                 <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=600&h=400&fit=crop" alt="Portfolio 2" class="portfolio-image">
                 <div class="portfolio-info">
                     <div class="portfolio-category">Website</div>
                     <h3 class="portfolio-title">Website Landing Page Design & Service</h3>
                 </div>
             </div>
-            <div class="portfolio-card">
+            <div class="portfolio-card" data-category="computer-vision">
+                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop" alt="Portfolio 3" class="portfolio-image">
+                <div class="portfolio-info">
+                    <div class="portfolio-category">Website</div>
+                    <h3 class="portfolio-title">Website Landing Page Design & Service</h3>
+                </div>
+            </div>
+            <div class="portfolio-card" data-category="computer-vision">
+                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop" alt="Portfolio 3" class="portfolio-image">
+                <div class="portfolio-info">
+                    <div class="portfolio-category">Website</div>
+                    <h3 class="portfolio-title">Website Landing Page Design & Service</h3>
+                </div>
+            </div>
+            <div class="portfolio-card" data-category="computer-vision">
                 <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop" alt="Portfolio 3" class="portfolio-image">
                 <div class="portfolio-info">
                     <div class="portfolio-category">Website</div>
