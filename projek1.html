@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiety - Payment Solution Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-teal: #0D5C63;
+            --dark-teal: #094247;
+            --accent-yellow: #FFB800;
+            --accent-orange: #FF8A3D;
+            --accent-green: #10B981;
+            --text-dark: #1F2937;
+            --text-gray: #6B7280;
+            --bg-light: #F9FAFB;
+            --bg-cream: #FFF8F0;
+            --white: #FFFFFF;
+            --blue: #3B82F6;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            background: var(--bg-light);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 8%;
+            background: var(--white);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-teal);
+        }
+
+        .nav-menu a.has-dropdown::after {
+            content: '▾';
+            margin-left: 5px;
+            font-size: 0.8rem;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .btn-signin {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .btn-started {
+            background: var(--blue);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-started:hover {
+            background: #2563EB;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--text-dark);
+            margin: 3px 0;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 8% 6rem;
+            background: var(--bg-light);
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: linear-gradient(135deg, rgba(255, 184, 0, 0.15), rgba(255, 138, 61, 0.15));
+            border-radius: 50%;
+            filter: blur(100px);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(13, 92, 99, 0.1));
+            border-radius: 50%;
+            filter: blur(100px);
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .money-emoji {
+            display: inline-block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-description {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 1s ease-out 0.4s backwards;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .phone-mockup {
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 3;
+            filter: drop-shadow(0 20px 60px rgba(0,0,0,0.2));
+        }
+
+        .hero-badge {
+            position: absolute;
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .badge-transaction {
+            top: 10%;
+            left: -15%;
+        }
+
+        .badge-users {
+            bottom: 20%;
+            left: -10%;
+        }
+
+        .badge-stats {
+            top: 15%;
+            right: -20%;
+        }
+
+        .badge-payment {
+            bottom: 30%;
+            right: -25%;
+        }
+
+        .payment-icons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+        }
+
+        /* Complete Payment Section */
+        .payment-solution {
+            padding: 6rem 8%;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4rem;
+            line-height: 1.3;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .solution-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-green), var(--primary-teal));
+        }
+
+        .solution-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        .solution-card.featured {
+            background: var(--primary-teal);
+            color: var(--white);
+        }
+
+        .solution-card.featured::before {
+            background: var(--accent-yellow);
+        }
+
+        .solution-card.featured h3,
+        .solution-card.featured p {
+            color: var(--white);
+        }
+
+        .solution-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .solution-card p {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .payment-method {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .payment-method img {
+            max-width: 80px;
+            height: auto;
+        }
+
+        /* Platform Section */
+        .platform {
+            padding: 6rem 8%;
+            background: var(--bg-light);
+        }
+
+        .platform-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .platform-content h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .platform-content p {
+            color: var(--text-gray);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .btn-trial {
+            background: var(--primary-teal);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(13, 92, 99, 0.3);
+        }
+
+        .btn-trial:hover {
+            background: var(--dark-teal);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(13, 92, 99, 0.4);
+        }
+
+        .platform-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.orange {
+            background: rgba(255, 138, 61, 0.15);
+            color: var(--accent-orange);
+        }
+
+        .stat-icon.blue {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--blue);
+        }
+
+        .stat-content h4 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .stat-content span {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .stat-content p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Simplify Section */
+        .simplify {
+            padding: 6rem 8%;
+            background: var(--primary-teal);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .simplify::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255, 184, 0, 0.1);
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+
+        .simplify-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .simplify-content h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+
+        .category-list {
+            list-style: none;
+            margin-top: 3rem;
+        }
+
+        .category-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(10px);
+        }
+
+        .category-item.active {
+            background: var(--accent-yellow);
+            color: var(--text-dark);
+        }
+
+        .category-name {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-item.active .category-icon {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-more {
+            background: var(--accent-yellow);
+            color: var(--text-dark);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 2rem;
+            transition: all 0.3s;
+        }
+
+        .btn-more:hover {
+            background: #FFA500;
+            transform: translateY(-2px);
+        }
+
+        .cards-3d {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .card-3d {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.9), rgba(230, 57, 70, 0.9));
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transform: rotateY(-15deg) rotateX(5deg);
+            transition: transform 0.3s;
+        }
+
+        .card-3d:hover {
+            transform: rotateY(-10deg) rotateX(2deg);
+        }
+
+        /* Investing Section */
+        .investing {
+            padding: 6rem 8%;
+            background: var(--bg-cream);
+        }
+
+        .investing-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .investing-content h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container,
+            .platform-container,
+            .simplify-container,
+            .investing-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero-content h1,
+            .platform-content h2,
+            .simplify-content h2,
+            .investing-content h2 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2.3rem;
+            }
+
+            .solution-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                gap: 1.5rem;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+                transition: right 0.4s ease;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-started {
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero {
+                padding: 7rem 5% 3rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .platform-content h2,
+            .simplify-content h2,
+            .investing-content h2 {
+                font-size: 2rem;
+            }
+
+            .payment-methods {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .badge-transaction,
+            .badge-users,
+            .badge-stats,
+            .badge-payment {
+                display: none;
+            }
+
+            .payment-solution,
+            .platform,
+            .simplify,
+            .investing {
+                padding: 4rem 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .category-item {
+                padding: 1rem 1.5rem;
+            }
+
+            .category-name {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Quiety</div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services" class="has-dropdown">Services</a></li>
+            <li><a href="#resources" class="has-dropdown">Resources</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#company" class="has-dropdown">Company</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="#" class="btn-signin">Sign In</a>
+            <a href="#" class="btn-started">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>
+                    Make money <span class="money-emoji">💸</span><br>
+                    way to
+                </h1>
+                <p class="hero-description">
+                    Give people all the current flows — unlike other providers, 
+                    Bankcured can be used to send money
+                </p>
+                <a href="#" class="btn-trial">Start Free Trial</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=700&fit=crop" alt="Phone App" class="phone-mockup">
+                
+                <div class="hero-badge badge-transaction">
+                    <div style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 0.5rem;">Amount</div>
+                    <div style="font-size: 1.3rem; font-weight: 700;">$500.00</div>
+                    <div style="font-size: 0.8rem; color: var(--text-gray); margin-top: 0.3rem;">Description: ⭐⭐⭐⭐ 88%</div>
+                </div>
+
+                <div class="hero-badge badge-users">
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Recent Transactions</div>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <div style="display: flex; margin-left: -5px;">
+                            <img src="https://i.pravatar.cc/40?img=1" style="width: 30px; height: 30px; border-radius: 50%; border: 2px solid white;" alt="User">
+                            <img src="https://i.pravatar.cc/40?img=2" style="width: 30px; height: 30px; border-radius: 50%; margin-left: -10px; border: 2px solid white;" alt="User">
+                            <img src="https://i.pravatar.cc/40?img=3" style="width: 30px; height: 30px; border-radius: 50%; margin-left: -10px; border: 2px solid white;" alt="User">
+                        </div>
+                        <span style="font-size: 0.9rem; color: var(--accent-green); font-weight: 600;">+4.5</span>
+                    </div>
+                </div>
+
+                <div class="hero-badge badge-stats">
+                    <div style="font-size: 0.85rem; color: var(--text-gray);">Daily Income</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0;">$3,010.00</div>
+                    <div style="font-size: 0.8rem; color: var(--accent-green);">+15% from yesterday</div>
+                </div>
+
+                <div class="hero-badge badge-payment">
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem;">in a number of ways</div>
+                    <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 1rem;">Give people all the current flows — unlike other providers Bankcured can be used to send money</p>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-paypal payment-icon" style="color: #003087;"></i>
+                        <i class="fab fa-cc-visa payment-icon" style="color: #1A1F71;"></i>
+                        <i class="fab fa-cc-mastercard payment-icon" style="color: #EB001B;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Complete Payment Solution -->
+    <section class="payment-solution">
+        <h2 class="section-title">
+            Complete payment Solution<br>
+            For Your Business
+        </h2>
+        <div class="solution-grid">
+            <div class="solution-card">
+                <h3>Unlock payments</h3>
+                <p>Accept card and ACH for one-time or recurring payments — it's completely up to you.</p>
+                <div style="margin-top: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-check-circle" style="color: var(--accent-green); font-size: 1.2rem;"></i>
+                        <span style="font-weight: 600;">Credit or debit card</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-check-circle" style="color: var(--accent-green); font-size: 1.2rem;"></i>
+                        <span style="font-weight: 600;">ACH bank transfer</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solution-card featured">
+                <h3>Approve more customers</h3>
+                <p>Accept card and ACH for one-time or recurring payments — it's completely up to you.</p>
+                <div style="margin-top: 2rem; background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 12px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                        <span style="font-weight: 600;">Account Updater</span>
+                        <label style="position: relative; display: inline-block; width: 50px; height: 26px;">
+                            <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--accent-green); border-radius: 34px; transition: .4s;"></span>
+                        </label>
+                    </div>
+                    <div style="font-size: 0.9rem; opacity: 0.8;">ACH Verification method</div>
+                </div>
+            </div>
+
+            <div class="solution-card">
+                <h3>Scale your business</h3>
+                <p>Accept card and ACH for one-time or recurring payments — it's completely up to you.</p>
+                <div style="margin-top: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <span style="font-size: 0.9rem; color: var(--text-gray);">Payment volume</span>
+                    </div>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-dark); margin: 1rem 0;">$50,240 <span style="font-size: 1rem; color: var(--text-gray);">USD</span></div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--accent-green); font-weight: 600;">+16%</span>
+                        <i class="fas fa-arrow-up" style="color: var(--accent-green);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="payment-methods" style="margin-top: 4rem;">
+            <div class="payment-method">
+                <i class="fab fa-cc-visa" style="font-size: 3rem; color: #1A1F71;"></i>
+            </div>
+            <div class="payment-method">
+                <i class="fab fa-cc-mastercard" style="font-size: 3rem; color: #EB001B;"></i>
+            </div>
+            <div class="payment-method">
+                <i class="fab fa-paypal" style="font-size: 3rem; color: #003087;"></i>
+            </div>
+            <div class="payment-method">
+                <i class="fab fa-cc-stripe" style="font-size: 3rem; color: #635BFF;"></i>
+            </div>
+            <div class="payment-method">
+                <i class="fab fa-cc-amex" style="font-size: 3rem; color: #006FCF;"></i>
+            </div>
+            <div class="payment-method">
+                <i class="fab fa-cc-discover" style="font-size: 3rem; color: #FF6000;"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Section -->
+    <section class="platform">
+        <div class="platform-container">
+            <div class="platform-content">
+                <h2>One platform all the tools you need to grow</h2>
+                <p>
+                    Give people all the current flows — unlike other providers, 
+                    Bankcured can be used to send money
+                </p>
+                <a href="#" class="btn-trial">Start Free Trial</a>
+
+                <div class="platform-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon orange">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h4>12m <span>Active User</span></h4>
+                            <p>Facilisis risus nisl dignissim quam hendrerit integer dictum etiam</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h4>06m <span>Active User</span></h4>
+                            <p>Facilisis risus nisl dignissim quam hendrerit integer dictum etiam</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="platform-image">
+                <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=600&h=700&fit=crop" alt="Platform" style="width: 100%; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.15);">
+            </div>
+        </div>
+    </section>
+
+    <!-- Simplify Section -->
+    <section class="simplify">
+        <div class="simplify-container">
+            <div class="simplify-content">
+                <h2>Simplify transactions with ease and money</h2>
+                <ul class="category-list">
+                    <li class="category-item active">
+                        <div class="category-name">
+                            <div class="category-icon">🎮</div>
+                            Gaming
+                        </div>
+                        <i class="fas fa-plus"></i>
+                    </li>
+                    <li class="category-item">
+                        <div class="category-name">
+                            <div class="category-icon">🛒</div>
+                            Online Shopping
+                        </div>
+                        <i class="fas fa-plus"></i>
+                    </li>
+                    <li class="category-item">
+                        <div class="category-name">
+                            <div class="category-icon">💼</div>
+                            Management
+                        </div>
+                        <i class="fas fa-plus"></i>
+                    </li>
+                    <li class="category-item">
+                        <div class="category-name">
+                            <div class="category-icon">💻</div>
+                            Freelancer
+                        </div>
+                        <i class="fas fa-plus"></i>
+                    </li>
+                </ul>
+                <a href="#" class="btn-more">View More Service</a>
+            </div>
+            <div class="cards-3d">
+                <div class="card-3d">
+                    <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 2rem;">Virtual Card</div>
+                    <div style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">$6,570.69</div>
+                    <div style="font-size: 2rem; font-weight: 700; margin-bottom: 2rem;">$5,720.20</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 0.85rem; opacity: 0.8;">Card Number</div>
+                            <div style="font-weight: 600; margin-top: 0.3rem;">**** **** **** 4521</div>
+                        </div>
+                        <i class="fab fa-cc-visa" style="font-size: 2.5rem;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investing Section -->
+    <section class="investing">
+        <div class="investing-container">
+            <div class="investing-content">
+                <h2>Investing isn't easy we just professional way</h2>
+            </div>
+            <div class="investing-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="Investing" style="width: 100%; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.15);">
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Hamburger Menu
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking links
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Category items click
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.solution-card, .stat-item, .category-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

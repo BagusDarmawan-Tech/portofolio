@@ -83,12 +83,12 @@
         }
 
         .btn-talk {
+            color: #fff !important;
+            font-weight: bold  !important;    
+            text-decoration: none;
             background: var(--primary-blue);
-            color: var(--white);
             padding: 0.7rem 1.8rem;
             border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(61, 82, 213, 0.3);
         }
@@ -226,7 +226,8 @@
             width: 100%;
             max-width: 500px;
             border-radius: 20px;
-            position: relative;
+            object-fit: cover;  /* biar nggak gepeng */
+            border-radius: 20px;
             z-index: 2;
         }
 
@@ -996,5 +997,11 @@
 
             .about-image {
                 flex: 0 0 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-photo-container {
+                display: none;
             }
         }

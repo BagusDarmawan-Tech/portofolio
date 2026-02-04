@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chimcel - Polymer & Plastic Materials Marketplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1E3A8A;
+            --secondary-cyan: #06B6D4;
+            --accent-orange: #F97316;
+            --accent-green: #10B981;
+            --dark-gray: #1F2937;
+            --medium-gray: #6B7280;
+            --light-gray: #F3F4F6;
+            --bg-gradient: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            color: var(--dark-gray);
+            background: var(--light-gray);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 6%;
+            background: var(--white);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-blue);
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--secondary-cyan);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-menu a:hover {
+            color: var(--secondary-cyan);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .search-icon {
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--dark-gray);
+            transition: color 0.3s;
+        }
+
+        .search-icon:hover {
+            color: var(--secondary-cyan);
+        }
+
+        .btn-contact {
+            background: var(--accent-orange);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
+
+        .btn-contact:hover {
+            background: #EA580C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--primary-blue);
+            margin: 3px 0;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 90px;
+            padding: 5rem 6% 4rem;
+            background: var(--bg-gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.2), transparent);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -15%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent);
+            border-radius: 50%;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            color: var(--white);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            font-weight: 500;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .btn-explore {
+            background: var(--accent-orange);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .btn-explore:hover {
+            background: #EA580C;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(249, 115, 22, 0.5);
+        }
+
+        .btn-catalog {
+            background: transparent;
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            border: 2px solid var(--white);
+            transition: all 0.3s;
+        }
+
+        .btn-catalog:hover {
+            background: var(--white);
+            color: var(--primary-blue);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 1s ease-out 0.4s backwards;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-product {
+            width: 100%;
+            max-width: 550px;
+            margin: 0 auto;
+            filter: drop-shadow(0 20px 60px rgba(0,0,0,0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Featured Products Section */
+        .featured {
+            padding: 1rem 6% 4rem;
+            background: var(--light-gray);
+            position: relative;
+            margin-top: -3rem;
+            z-index: 3;
+        }
+
+        .featured-badge {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .badge-content {
+            flex: 1;
+        }
+
+        .badge-label {
+            font-size: 0.95rem;
+            color: var(--medium-gray);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .badge-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-desc {
+            color: var(--medium-gray);
+            line-height: 1.6;
+        }
+
+        .badge-products {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .mini-product {
+            width: 100px;
+            height: 100px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .mini-product:hover {
+            transform: scale(1.1);
+        }
+
+        .mini-product img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Products Grid */
+        .products-section {
+            padding: 4rem 6%;
+            background: var(--white);
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--medium-gray);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: var(--light-gray);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-green);
+            color: var(--white);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-category {
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-specs {
+            color: var(--medium-gray);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 2px solid rgba(0,0,0,0.05);
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--medium-gray);
+        }
+
+        .product-price .amount {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn-order {
+            background: var(--accent-orange);
+            color: var(--white);
+            padding: 0.7rem 1.8rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
+
+        .btn-order:hover {
+            background: #EA580C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        /* Info Section */
+        .info-section {
+            padding: 5rem 6%;
+            background: var(--light-gray);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .info-image {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .info-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .info-content p {
+            color: var(--medium-gray);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .info-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .info-features li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .info-features i {
+            color: var(--accent-green);
+            font-size: 1.3rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 6%;
+            background: var(--bg-gradient);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: var(--accent-orange);
+            color: var(--white);
+            padding: 1.2rem 3rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 6px 30px rgba(249, 115, 22, 0.4);
+        }
+
+        .cta-button:hover {
+            background: #EA580C;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(249, 115, 22, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+
+            .hamburger {
+                display: flex;
+                z-index: 1001;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                gap: 2rem;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+                transition: right 0.4s ease;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-contact {
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero {
+                padding: 3rem 5%;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-explore,
+            .btn-catalog {
+                width: 100%;
+                text-align: center;
+            }
+
+            .featured {
+                padding: 1rem 5% 3rem;
+            }
+
+            .featured-badge {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .badge-products {
+                justify-content: center;
+            }
+
+            .products-section {
+                padding: 3rem 5%;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-section {
+                padding: 3rem 5%;
+            }
+
+            .info-content h2 {
+                font-size: 2rem;
+            }
+
+            .cta-section {
+                padding: 3rem 5%;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .product-name {
+                font-size: 1.3rem;
+            }
+
+            .mini-product {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-atom"></i>
+            Chimcel
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#beranda">Beranda</a></li>
+            <li><a href="#produk">Produk</a></li>
+            <li><a href="#layanan">Layanan</a></li>
+            <li><a href="#tentang">Tentang Kami</a></li>
+        </ul>
+        <div class="nav-actions">
+            <i class="fas fa-search search-icon"></i>
+            <a href="#contact" class="btn-contact">Hubungi</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="beranda">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-flask"></i> Jual Beli Terpercaya Sejak 2010
+                </div>
+                <h1 class="hero-title">
+                    Material Polimer<br>
+                    Berkualitas Tinggi
+                </h1>
+                <p class="hero-description">
+                    Menyediakan berbagai jenis polimer dan bahan plastik untuk industri manufaktur, konstruksi, dan engineering dengan standar internasional.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#produk" class="btn-explore">Eksplorasi Produk</a>
+                    <a href="#" class="btn-catalog">Download Katalog</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&h=600&fit=crop" alt="Polymer Materials" class="hero-product">
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section class="featured">
+        <div class="featured-badge fade-in">
+            <div class="badge-content">
+                <div class="badge-label">Kategori Unggulan</div>
+                <h3 class="badge-title">Polimer Teknik</h3>
+                <p class="badge-desc">
+                    Tersedia berbagai jenis polimer teknik dengan ketahanan tinggi terhadap panas, tekanan, dan bahan kimia. Cocok untuk aplikasi industrial dan engineering.
+                </p>
+            </div>
+            <div class="badge-products">
+                <div class="mini-product">
+                    <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=150&h=150&fit=crop" alt="Product">
+                </div>
+                <div class="mini-product">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=150&h=150&fit=crop" alt="Product">
+                </div>
+                <div class="mini-product">
+                    <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=150&h=150&fit=crop" alt="Product">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="produk">
+        <div class="section-header">
+            <h2 class="section-title">Produk Unggulan Kami</h2>
+            <p class="section-subtitle">
+                Koleksi lengkap bahan polimer dan plastik berkualitas tinggi untuk berbagai keperluan industri
+            </p>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=400&h=300&fit=crop" alt="Polyethylene">
+                    <span class="product-badge">Stok Tersedia</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Thermoplastic</div>
+                    <h3 class="product-name">Polyethylene HDPE</h3>
+                    <p class="product-specs">
+                        Kepadatan tinggi, tahan korosi dan bahan kimia. Ideal untuk pipa, tangki, dan aplikasi konstruksi.
+                    </p>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            Mulai<br>
+                            <span class="amount">Rp 24K</span>/kg
+                        </div>
+                        <a href="#" class="btn-order">Pesan</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop" alt="Polypropylene">
+                    <span class="product-badge">Stok Tersedia</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Thermoplastic</div>
+                    <h3 class="product-name">Polypropylene PP</h3>
+                    <p class="product-specs">
+                        Ringan, fleksibel, dan tahan panas. Digunakan untuk kemasan, komponen otomotif, dan tekstil.
+                    </p>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            Mulai<br>
+                            <span class="amount">Rp 19K</span>/kg
+                        </div>
+                        <a href="#" class="btn-order">Pesan</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=300&fit=crop" alt="PVC">
+                    <span class="product-badge">Best Seller</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Vinyl</div>
+                    <h3 class="product-name">PVC Rigid</h3>
+                    <p class="product-specs">
+                        Kuat, tahan lama, dan ekonomis. Cocok untuk pipa, profil jendela, dan aplikasi bangunan.
+                    </p>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            Mulai<br>
+                            <span class="amount">Rp 16K</span>/kg
+                        </div>
+                        <a href="#" class="btn-order">Pesan</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=400&h=300&fit=crop" alt="Nylon">
+                    <span class="product-badge">Premium</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Engineering Plastic</div>
+                    <h3 class="product-name">Nylon PA6</h3>
+                    <p class="product-specs">
+                        Ketahanan aus tinggi, kekuatan mekanik superior. Untuk bearing, gear, dan komponen presisi.
+                    </p>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            Mulai<br>
+                            <span class="amount">Rp 58K</span>/kg
+                        </div>
+                        <a href="#" class="btn-order">Pesan</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&h=300&fit=crop" alt="Polycarbonate">
+                    <span class="product-badge">Stok Tersedia</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Engineering Plastic</div>
+                    <h3 class="product-name">Polycarbonate PC</h3>
+                    <p class="product-specs">
+                        Transparan, tahan benturan tinggi. Untuk safety glass, lensa, dan aplikasi optik.
+                    </p>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            Mulai<br>
+                            <span class="amount">Rp 68K</span>/kg
+                        </div>
+                        <a href="#" class="btn-order">Pesan</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card fade-in">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=300&fit=crop" alt="ABS">
+                    <span class="product-badge">Stok Tersedia</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Engineering Plastic</div>
+                    <h3 class="product-name">ABS Resin</h3>
+                    <p class="product-specs">
+                        Kombinasi kekuatan, keuletan, dan kemudahan proses. Ideal untuk casing elektronik dan otomotif.
+                    </p>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            Mulai<br>
+                            <span class="amount">Rp 32K</span>/kg
+                        </div>
+                        <a href="#" class="btn-order">Pesan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+        <div class="info-grid">
+            <div>
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&h=700&fit=crop" alt="Laboratory" class="info-image">
+            </div>
+            <div class="info-content fade-in">
+                <h2>Kualitas Terjamin dengan Sertifikasi Internasional</h2>
+                <p>
+                    Semua produk kami telah melewati uji quality control yang ketat dan memiliki sertifikasi standar internasional. Kami berkomitmen memberikan material polimer terbaik untuk mendukung kesuksesan bisnis Anda.
+                </p>
+                <ul class="info-features">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        Sertifikasi ISO 9001:2015
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        Pengujian laboratorium terakreditasi
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        Garansi kualitas produk
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        Technical support 24/7
+                    </li>
+                </ul>
+                <a href="#" class="btn-explore">Pelajari Lebih Lanjut</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="cta-title">Siap Memulai Proyek Anda?</h2>
+        <p class="cta-subtitle">
+            Hubungi tim kami untuk konsultasi gratis dan dapatkan penawaran terbaik untuk kebutuhan material polimer Anda.
+        </p>
+        <a href="#" class="cta-button">Hubungi Sekarang</a>
+    </section>
+
+    <script>
+        // Hamburger Menu
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking links
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Product cards stagger animation
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>

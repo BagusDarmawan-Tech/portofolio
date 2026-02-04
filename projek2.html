@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Looper - Aviation Supply Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #0A0A0A;
+            --accent-green: #00D084;
+            --bg-light: #F5F5F7;
+            --bg-white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-gray: #6B6B6B;
+            --border-light: #E5E5E5;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 6%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Syne', sans-serif;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--primary-black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-white);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .btn-demo {
+            background: var(--primary-black);
+            color: var(--bg-white);
+            padding: 0.7rem 1.8rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .btn-demo:hover {
+            background: var(--accent-green);
+            color: var(--primary-black);
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--primary-black);
+            margin: 3px 0;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 90px;
+            padding: 5rem 6% 3rem;
+            background: var(--bg-white);
+            border-radius: 40px;
+            margin-left: 2%;
+            margin-right: 2%;
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 5.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--primary-black);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease-out 0.2s backwards;
+        }
+
+        .hero-image-container {
+            position: relative;
+            animation: fadeInRight 0.8s ease-out 0.4s backwards;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hand-illustration {
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+
+        .airplane-icon {
+            position: absolute;
+            top: 10%;
+            right: 15%;
+            font-size: 3rem;
+            animation: fly 4s ease-in-out infinite;
+        }
+
+        @keyframes fly {
+            0%, 100% { 
+                transform: translate(0, 0) rotate(0deg); 
+            }
+            25% { 
+                transform: translate(20px, -20px) rotate(5deg); 
+            }
+            50% { 
+                transform: translate(40px, -10px) rotate(-5deg); 
+            }
+            75% { 
+                transform: translate(20px, 10px) rotate(3deg); 
+            }
+        }
+
+        .phone-mockup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-10deg);
+            width: 250px;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));
+            z-index: 3;
+        }
+
+        /* AI Features Section */
+        .ai-features {
+            padding: 6rem 6%;
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--primary-black);
+            margin-bottom: 1rem;
+        }
+
+        .avatar-group {
+            display: inline-flex;
+            margin: 0 0.5rem;
+            position: relative;
+            vertical-align: middle;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid var(--bg-light);
+            margin-left: -15px;
+            background: linear-gradient(135deg, var(--accent-green), #00A86B);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .avatar:first-child {
+            margin-left: 0;
+        }
+
+        .avatar.purple {
+            background: linear-gradient(135deg, #9B59B6, #8E44AD);
+        }
+
+        .avatar.green {
+            background: linear-gradient(135deg, #00D084, #00A86B);
+        }
+
+        .avatar.dark {
+            background: linear-gradient(135deg, #2C3E50, #34495E);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .feature-laptop {
+            background: var(--bg-white);
+            border-radius: 30px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .laptop-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 15px;
+            filter: drop-shadow(0 15px 35px rgba(0,0,0,0.15));
+        }
+
+        .demo-badge {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            background: var(--bg-white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .demo-badge:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .demo-badge span {
+            font-weight: 600;
+            color: var(--primary-black);
+        }
+
+        .arrow-circle {
+            width: 35px;
+            height: 35px;
+            background: var(--primary-black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .feature-item:hover {
+            border-color: var(--accent-green);
+            transform: translateX(10px);
+        }
+
+        .feature-number {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-black);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: var(--text-gray);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .benefits-section {
+            background: var(--bg-white);
+            border-radius: 30px;
+            padding: 3rem;
+            margin-top: 3rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-card {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .benefit-text {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-badge {
+            background: var(--accent-green);
+            color: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            font-family: 'Syne', sans-serif;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+
+            .section-title {
+                font-size: 2.8rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1.5rem 5%;
+            }
+
+            .hamburger {
+                display: flex;
+                z-index: 1001;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--bg-white);
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                gap: 2rem;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+                transition: right 0.4s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 0.5rem 0;
+            }
+
+            .btn-demo {
+                width: 100%;
+                text-align: center;
+                padding: 0.9rem;
+            }
+
+            .hero {
+                margin-left: 3%;
+                margin-right: 3%;
+                padding: 3rem 5%;
+                border-radius: 30px;
+                min-height: auto;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .hand-illustration {
+                max-width: 100%;
+            }
+
+            .phone-mockup {
+                width: 180px;
+            }
+
+            .airplane-icon {
+                font-size: 2rem;
+            }
+
+            .ai-features {
+                padding: 4rem 5%;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .feature-laptop,
+            .benefits-section {
+                padding: 2rem;
+            }
+
+            .laptop-image {
+                max-width: 100%;
+            }
+
+            .demo-badge {
+                position: static;
+                margin-top: 2rem;
+                justify-content: center;
+            }
+
+            .feature-item {
+                padding: 1.5rem;
+            }
+
+            .feature-title {
+                font-size: 1.2rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+
+            .hero {
+                margin-left: 0;
+                margin-right: 0;
+                border-radius: 0;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-icon">L</div>
+            Looper
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#technology">Technology</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#demo" class="btn-demo">View Demo</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <p class="hero-subtitle">Save time and money<br>Automated Inventory Management</p>
+                <h1 class="hero-title">Optimize,<br>Outperform</h1>
+            </div>
+            <div class="hero-image-container">
+                <svg class="hand-illustration" viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Hand outline -->
+                    <path d="M350 450C350 450 380 480 350 520C320 560 250 570 200 550C150 530 120 480 140 430L180 320L220 280C220 280 240 260 260 280C280 300 270 330 270 330L240 400" stroke="black" stroke-width="3" fill="white"/>
+                    
+                    <!-- Fingers -->
+                    <path d="M260 280L250 220C250 220 245 200 260 195C275 190 285 205 285 220L290 280" stroke="black" stroke-width="3" fill="white"/>
+                    <path d="M290 270L300 210C300 210 298 190 313 188C328 186 335 203 333 218L330 270" stroke="black" stroke-width="3" fill="white"/>
+                    <path d="M330 270L345 215C345 215 348 195 363 198C378 201 380 218 375 233L365 275" stroke="black" stroke-width="3" fill="white"/>
+                    
+                    <!-- Phone in hand -->
+                    <rect x="200" y="250" width="120" height="240" rx="20" fill="white" stroke="black" stroke-width="3"/>
+                    <rect x="210" y="265" width="100" height="180" rx="10" fill="#F0F0F0"/>
+                    
+                    <!-- Phone screen details -->
+                    <rect x="215" y="270" width="90" height="30" rx="5" fill="white"/>
+                    <text x="225" y="287" font-family="Arial" font-size="10" fill="black">Aviation Supply</text>
+                    <text x="225" y="298" font-family="Arial" font-size="8" fill="#666">Platform</text>
+                    
+                    <!-- Green accent on phone -->
+                    <rect x="215" y="310" width="40" height="25" rx="8" fill="#00D084"/>
+                    <circle cx="280" cy="430" r="15" fill="#00D084"/>
+                </svg>
+                
+                <div class="airplane-icon">✈️</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Features Section -->
+    <section class="ai-features">
+        <h2 class="section-title">
+            Leverage the power<br>
+            of AI in 
+            <div class="avatar-group">
+                <div class="avatar purple">AI</div>
+                <div class="avatar green">JET</div>
+                <div class="avatar dark">+</div>
+            </div>
+            aircraft<br>
+            parts procurement
+        </h2>
+
+        <div class="features-grid fade-in-section">
+            <div class="feature-laptop">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop" alt="Dashboard" class="laptop-image">
+                <div class="demo-badge">
+                    <span>Demo our dashboard.</span>
+                    <div class="arrow-circle">→</div>
+                </div>
+            </div>
+
+            <div class="features-list">
+                <div class="feature-item">
+                    <div class="feature-number">01</div>
+                    <h3 class="feature-title">AI Revolution</h3>
+                    <p class="feature-description">Access procurement securely with Blockchain, ensuring part authenticity.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-number">02</div>
+                    <h3 class="feature-title">AI Chatbot JET</h3>
+                    <p class="feature-description">Boost sourcing with AI Chatbot JET on popular messaging platforms.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-number">03</div>
+                    <h3 class="feature-title">AI Assistance</h3>
+                    <p class="feature-description">Interact efficiently with our system using voice commands.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="benefits-section fade-in-section">
+            <div class="benefits-grid">
+                <div>
+                    <p class="benefit-text">
+                        Explore a multitude of benefits meticulously tailored to meet the unique needs of buyers.
+                    </p>
+                </div>
+                <div class="stat-badge">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">JET AI chatbot slashes response times.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Hamburger Menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Feature items animation on load
+        const featureItems = document.querySelectorAll('.feature-item');
+        featureItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = `all 0.6s ease-out ${index * 0.2}s`;
+            
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, 1000 + (index * 200));
+        });
+    </script>
+</body>
+</html>
